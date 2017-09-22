@@ -1,0 +1,26 @@
+.display-3 {
+	text-align: center;
+	color: white !important;
+}
+
+.table {
+	width: 100%;
+}
+
+.jumbotron {
+	background-color: #009999;
+	font-family: 'Varela', sans-serif;
+}
+
+.panel-heading {
+	background-color: #d9d9d9 !important;
+	font-family: 'Varela', sans-serif;
+}
+
+.section {
+	display: inline-block;
+}
+
+.col-sm-3 {
+	float: right;
+}
