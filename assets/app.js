@@ -27,12 +27,6 @@ function validateHHMM(inputField) {
     console.log(timeCheck);
 };
 
-// at initial load, bring in current data
-// database.ref().on("value", function(snapshot) {
-
-
-// });
-
 // onclick event for submit
 $("#submit").on("click", function(event) {
 event.preventDefault();
@@ -63,6 +57,11 @@ event.preventDefault();
     $("#inputDest").val('');
     $("#inputTime").val('');
     $("#inputFreq").val('');
+    $("#submit").prop('disabled', true);
+    setTimeout(function(){
+      $("#submit").prop('disabled', false);
+    }, 0);
+
 
     alert("New train successfully added");
   }
@@ -80,6 +79,7 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
   var retDest = childSnapshot.val().destination;
   var retTime = childSnapshot.val().firstTime;
   var retFreq = childSnapshot.val().frequency;
+  console.log(retName + ', ' + retDest + ', ' + retTime + ', ' + retFreq)
 
   // calculate Next Arrival time
   var convFirstTime = moment(retTime, "hh:mm").subtract(1, "years");
@@ -90,7 +90,7 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
   // minutes until next train
   var minToTrain = retFreq - tRemainder;
   // next arrival time
-  var nextTrain = moment().add(minToTrain, "minutes");
+  var nextTrain = moment().add(minToTrain, "minutes").format('hh:mm');
 
   $("#trainTable > tbody").append("<tr><td>" 
                                   + retName + "</td><td>" 
@@ -100,3 +100,8 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
                                   + minToTrain + "</td></tr>"
                                   );
 }); // end of fb listener
+
+// Refreshes page every minute
+setTimeout(function () { 
+  location.reload();
+}, 60 * 1000);
